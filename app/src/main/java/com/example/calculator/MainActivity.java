@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
                     //在设置第2个以上数字
 
                         if(!(Sirusi.operand1==0.0&&numButton.getText().toString().equals("0"))) {
-                            if(Sirusi.operand1==0.0)
+                            if(Sirusi.operand1==0.0&&!tvcache.equals("0."))
                             {
                                 tvcache = numButton.getText().toString();
                                 Sirusi.operand1 = Double.valueOf(tvcache);
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
                         if(!(Sirusi.operand2==0.0&&numButton.getText().toString().equals("0")))
                         {
 
-                            if(Sirusi.operand2==0.0){
+                            if(Sirusi.operand2==0.0&&!tvcache.equals("0.")){
                                 tvcache = numButton.getText().toString();
                                 Sirusi.operand2 = Double.valueOf(tvcache);
                             }
@@ -289,6 +289,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
+    private void setDisplayTextview(String tvach){
+
+
+
+
+    }
 
 
     private void init_opButtonnotSelectedState(){
