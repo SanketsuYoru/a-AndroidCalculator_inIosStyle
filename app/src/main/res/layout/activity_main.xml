@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_dark"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="right"
+            android:layout_weight="5">
+
+            <TextView
+                android:id="@+id/display_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom"
+                android:layout_marginRight="30dp"
+                android:text="0"
+                android:textColor="#FFFFFF"
+                android:textSize="72dp"
+                android:textStyle="normal"></TextView>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="10.8"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/ac_Button"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_selector_gray"
+                    android:gravity="center"
+                    android:onClick="ACButton_onClick"
+                    android:text="AC"
+                    android:textColor="#000000"
+                    android:textSize="36sp"></Button>
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_selector_gray"
+                    android:gravity="center"
+                    android:onClick="inverseButton_onClick"
+                    android:text="+/-"
+                    android:textColor="#000000"
+                    android:textSize="36sp"></Button>
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_selector_gray"
+                    android:gravity="center"
+                    android:onClick="percentButton_onClick"
+                    android:text="%"
+                    android:textColor="#000000"
+                    android:textSize="36sp"></Button>
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_selector_yellow"
+                    android:gravity="center"
+                    android:onClick="opButton_onClick"
+                    android:text="÷"
+                    android:textColor="#F6F6F6"
+                    android:textSize="36sp"></Button>
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_selector"
+                    android:gravity="center"
+                    android:onClick="numButton_onClick"
+                    android:text="7"
+                    android:textColor="#F6F6F6"
+                    android:textSize="36sp"></Button>
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_selector"
+                    android:gravity="center"
+                    android:onClick="numButton_onClick"
+                    android:text="8"
+                    android:textColor="#F6F6F6"
+                    android:textSize="36sp"></Button>
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_selector"
+                    android:gravity="center"
+                    android:onClick="numButton_onClick"
+                    android:text="9"
+                    android:textColor="#F6F6F6"
+                    android:textSize="36sp"></Button>
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_selector_yellow"
+                    android:gravity="center"
+                    android:onClick="opButton_onClick"
+                    android:text="×"
+                    android:textColor="#F6F6F6"
+                    android:textSize="36sp"></Button>
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_selector"
+                    android:gravity="center"
+                    android:onClick="numButton_onClick"
+                    android:text="4"
+                    android:textColor="#F6F6F6"
+                    android:textSize="36sp"></Button>
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_selector"
+                    android:gravity="center"
+                    android:onClick="numButton_onClick"
+                    android:text="5"
+                    android:textColor="#F6F6F6"
+                    android:textSize="36sp"></Button>
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_selector"
+                    android:gravity="center"
+                    android:onClick="numButton_onClick"
+                    android:text="6"
+                    android:textColor="#F6F6F6"
+                    android:textSize="36sp"></Button>
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_selector_yellow"
+                    android:gravity="center"
+                    android:onClick="opButton_onClick"
+                    android:text="-"
+                    android:textColor="#F6F6F6"
+                    android:textSize="45dp"></Button>
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="#262626"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_selector"
+                    android:gravity="center"
+                    android:onClick="numButton_onClick"
+                    android:text="1"
+                    android:textColor="#F6F6F6"
+                    android:textSize="36sp"></Button>
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_selector"
+                    android:gravity="center"
+                    android:onClick="numButton_onClick"
+                    android:text="2"
+                    android:textColor="#F6F6F6"
+                    android:textSize="36sp"></Button>
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_selector"
+                    android:gravity="center"
+                    android:onClick="numButton_onClick"
+                    android:text="3"
+                    android:textColor="#F6F6F6"
+                    android:textSize="36sp"></Button>
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_selector_yellow"
+                    android:gravity="center"
+                    android:onClick="opButton_onClick"
+                    android:text="+"
+                    android:textColor="#F6F6F6"
+                    android:textSize="36sp"></Button>
+
+            </LinearLayout>
+
+            <LinearLayout
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="180dp"
+                    android:layout_height="85dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/btn_selector"
+                    android:gravity="left"
+                    android:onClick="numButton_onClick"
+                    android:paddingLeft="32.5dp"
+                    android:paddingTop="15dp"
+                    android:text="0"
+                    android:textColor="#F6F6F6"
+                    android:textSize="36sp"></Button>
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_selector"
+                    android:gravity="center"
+                    android:onClick="decimalpointButton_onClick"
+                    android:text="."
+                    android:textColor="#F6F6F6"
+                    android:textSize="42dp"></Button>
+
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btn_selector_yellow"
+                    android:gravity="center"
+                    android:onClick="equalsButton_onClick"
+                    android:text="="
+                    android:textColor="#F6F6F6"
+                    android:textSize="45dp"></Button>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
