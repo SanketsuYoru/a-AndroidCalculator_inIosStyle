@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             if(selectedOperate_btn!=null)
-            init_opButtonnotSelectedState();
+                init_opButtonnotSelectedState();
             acbutton.setText("C");
             //Calculated=false;
             Button numButton= (Button)view;
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                     Sirusi.operand1 = Double.valueOf("0.0");
 
                 } else
-                    {
+                {
                     //在设置第2个以上小数点
                     if(!isDecimalPointAlreadyexists(tvcache))
                     {
@@ -161,36 +161,37 @@ public class MainActivity extends AppCompatActivity {
 
 
             //在设置operand1
-            if (Sirusi.operand1==null||Sirusi.operate.equals("null"))
-                if (Sirusi.operand1==null)
-                {
+            if (Sirusi.operand1==null||Sirusi.operate.equals("null")) {
+                if (Sirusi.operand1 == null) {
                     //在设置第1个数字
                     tvcache = numButton.getText().toString();
                     displayTextview.setText(numButton.getText().toString());
                     Sirusi.operand1 = Double.valueOf(tvcache);
 
-                } else
-                    {
+                } else {
                     //在设置第2个以上数字
 
-                        if(!(Sirusi.operand1==0.0&&numButton.getText().toString().equals("0"))) {
-                            if(Sirusi.operand1==0.0&&!tvcache.equals("0."))
-                            {
-                                tvcache = numButton.getText().toString();
-                                Sirusi.operand1 = Double.valueOf(tvcache);
-                            }
-                            else
-                            {
+                    if (!(Sirusi.operand1 == 0.0 && numButton.getText().toString().equals("0"))) {
+                        tvcache += numButton.getText().toString();
+                        Sirusi.operand1 = Double.valueOf(tvcache);
+                    } else {
+                        if (Sirusi.operand1 == 0.0 && !isDecimalPointAlreadyexists(tvcache)) {
+                            tvcache = numButton.getText().toString();
+                            Sirusi.operand1 = Double.valueOf(tvcache);
+                        } else {
                             tvcache += numButton.getText().toString();
                             Sirusi.operand1 = Double.valueOf(tvcache);
-                            }
-                            if (displayTextview.getText().length() < 8)
-                                displayTextview.setText(tvcache);
-                            else {
-                                //缩小字体，并显示
-                            }
                         }
+                    }
+                    if (displayTextview.getText().length() < 8)
+                        displayTextview.setText(tvcache);
+                    else {
+                        //缩小字体，并显示
+                    }
+
                 }
+
+            }
 
 
 
@@ -203,31 +204,25 @@ public class MainActivity extends AppCompatActivity {
                     Sirusi.operand2 = Double.valueOf(tvcache);
                 }
                 else
-                    {
-                    //在设置第2个数字
-                        if(!(Sirusi.operand2==0.0&&numButton.getText().toString().equals("0")))
-                        {
-
-                            if(Sirusi.operand2==0.0&&!tvcache.equals("0.")){
-                                tvcache = numButton.getText().toString();
-                                Sirusi.operand2 = Double.valueOf(tvcache);
-                            }
-                            else
-                            {
-                                tvcache += numButton.getText().toString();
-                                Sirusi.operand2 = Double.valueOf(tvcache);
-                            }
-
+                {
+                    if (!(Sirusi.operand2 == 0.0 && numButton.getText().toString().equals("0"))) {
+                        tvcache += numButton.getText().toString();
+                        Sirusi.operand2 = Double.valueOf(tvcache);
+                    } else {
+                        if (Sirusi.operand2 == 0.0 && !isDecimalPointAlreadyexists(tvcache)) {
+                            tvcache = numButton.getText().toString();
+                            Sirusi.operand2 = Double.valueOf(tvcache);
+                        } else {
+                            tvcache += numButton.getText().toString();
+                            Sirusi.operand2 = Double.valueOf(tvcache);
+                        }
                     }
-
-
                     if (displayTextview.getText().length() < 8)
                         displayTextview.setText(tvcache);
                     else {
                         //缩小字体，并显示
-
-                }
                     }
+                }
             }
             Log.e("tvcache", tvcache);
             Log.e("operand1", Sirusi.operand1.toString());
@@ -265,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
             else
-                {
+            {
                 //All Clean
                 if(selectedOperate_btn!=null)
                     init_opButtonnotSelectedState();
@@ -322,33 +317,33 @@ public class MainActivity extends AppCompatActivity {
     //如果是加减
     public void addORsub_onClick(Button view)
     {
-            //如果用户没输入op1直接按
-            if (Sirusi.operate.equals("null") && Sirusi.operand1 == null) {
-                Sirusi.operand1 = 0.0;
-                Sirusi.operate = view.getText().toString();
+        //如果用户没输入op1直接按
+        if (Sirusi.operate.equals("null") && Sirusi.operand1 == null) {
+            Sirusi.operand1 = 0.0;
+            Sirusi.operate = view.getText().toString();
+        }
+        //用户没输入op2
+        else if (Sirusi.operand2 == null) {
+            Sirusi.operate = view.getText().toString();
+        }
+        //用户都输入了
+        else {
+            if(Cached)
+            {
+                //计算Cached并Cached=false;
+                Sirusi.operand1=calculoneOperation(calculatecache,preOperate,calculoneOperation(Sirusi.operand1,Sirusi.operate,Sirusi.operand2));
+                //清空op2，计算缓存
+                Sirusi.operand2=null;
+                tvcache=Sirusi.operand1.toString();
+                displayTextview.setText(tvcache);
+                Sirusi.operate= view.getText().toString();
+                calculatecache=null;
+                preOperate="null";
+                Cached=false;
             }
-            //用户没输入op2
-            else if (Sirusi.operand2 == null) {
-                Sirusi.operate = view.getText().toString();
-            }
-            //用户都输入了
-            else {
-                if(Cached)
-                {
-                    //计算Cached并Cached=false;
-                    Sirusi.operand1=calculoneOperation(calculatecache,preOperate,calculoneOperation(Sirusi.operand1,Sirusi.operate,Sirusi.operand2));
-                    //清空op2，计算缓存
-                    Sirusi.operand2=null;
-                    tvcache=Sirusi.operand1.toString();
-                    displayTextview.setText(tvcache);
-                    Sirusi.operate= view.getText().toString();
-                    calculatecache=null;
-                    preOperate="null";
-                    Cached=false;
-                }
-                else
-                    //不需要处理Cache
-                {
+            else
+            //不需要处理Cache
+            {
                 //处理结果并显示
                 Sirusi.operand1=calculoneOperation(Sirusi.operand1,Sirusi.operate,Sirusi.operand2);
                 //清空op2，计算缓存
@@ -359,7 +354,7 @@ public class MainActivity extends AppCompatActivity {
                 calculatecache=null;
                 preOperate="null";
             }
-            }
+        }
 
     }
     //如果是乘除
@@ -394,34 +389,34 @@ public class MainActivity extends AppCompatActivity {
                 /*没有需要计算的cache */
 
                 //前一个运算符是+/-需要Cache
-            if(Sirusi.operate.equals("+")||Sirusi.operate.equals("-"))
-            {
-                calculatecache=Sirusi.operand1;
-                preOperate=Sirusi.operate;
-                Sirusi.operate = view.getText().toString();
-                Sirusi.operand1=Sirusi.operand2;
-                Sirusi.operand2=null;
-                Cached=true;
-            }
-            else
-            {
-                //前一个不是+/-直接计算不Cache
-                //计算Cached并Cached=false;
-                Sirusi.operand1=calculoneOperation(Sirusi.operand1,Sirusi.operate,Sirusi.operand2);
-                //清空op2，计算缓存
-                Sirusi.operand2=null;
-                tvcache=Sirusi.operand1.toString();
-                displayTextview.setText(tvcache);
-                Sirusi.operate= view.getText().toString();
-                calculatecache=null;
-                preOperate="null";
-                Cached=false;
+                if(Sirusi.operate.equals("+")||Sirusi.operate.equals("-"))
+                {
+                    calculatecache=Sirusi.operand1;
+                    preOperate=Sirusi.operate;
+                    Sirusi.operate = view.getText().toString();
+                    Sirusi.operand1=Sirusi.operand2;
+                    Sirusi.operand2=null;
+                    Cached=true;
+                }
+                else
+                {
+                    //前一个不是+/-直接计算不Cache
+                    //计算Cached并Cached=false;
+                    Sirusi.operand1=calculoneOperation(Sirusi.operand1,Sirusi.operate,Sirusi.operand2);
+                    //清空op2，计算缓存
+                    Sirusi.operand2=null;
+                    tvcache=Sirusi.operand1.toString();
+                    displayTextview.setText(tvcache);
+                    Sirusi.operate= view.getText().toString();
+                    calculatecache=null;
+                    preOperate="null";
+                    Cached=false;
 
-            }
+                }
             }
         }
 
-        }
+    }
 
 
 
@@ -449,6 +444,8 @@ public class MainActivity extends AppCompatActivity {
 
         return 1;
     }
+
+
 
 
     public void inverseButton_onClick(View view)
@@ -573,7 +570,7 @@ public class MainActivity extends AppCompatActivity {
                 catch (Exception e)
                 {
                     if(Sirusi.operand1==null)
-                    Sirusi.operand1=Double.valueOf( tvcache);
+                        Sirusi.operand1=Double.valueOf( tvcache);
 
                     //处理结果并显示
                     //Sirusi.operand1=calculoneOperation(Sirusi.operand1,Sirusi.operate,Sirusi.operand2);
