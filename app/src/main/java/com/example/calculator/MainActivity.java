@@ -484,26 +484,26 @@ public class MainActivity extends AppCompatActivity {
             if (selectedOperate_btn != null)
                 init_opButtonnotSelectedState();
             calculateComplete = false;
-            if ((Double.valueOf(tvcache) + 0.0) == Sirusi.operand1 || Sirusi.operand1 == null) {
+            if (Sirusi.operate.equals("null")|| Sirusi.operand1 == null) {
                 if (Sirusi.operand1 == null) {
-                    Sirusi.operand1 = -Double.valueOf(tvcache);
-                    tvcache = Sirusi.operand1.toString();
-                    displayTextview.setText(tvcache);
+                    //Sirusi.operand1 = 0.0;
+                    //tvcache = Sirusi.operand1.toString();
+                    displayTextview.setText("0");
                     Log.e("inverseButton", Sirusi.operand1 + "");
                 } else {
                     Sirusi.operand1 = -Sirusi.operand1;
-                    tvcache = Sirusi.operand1.toString();
+                    //tvcache = Sirusi.operand1.toString();
                     //displayTextview.setText(tvcache);
-                    tvcache=new DecimalFormat(getMaxLengthofDecimal_pattern(Double.valueOf(tvcache), Double.valueOf("0"), "+")).format(Double.valueOf(tvcache));
+                    tvcache=new DecimalFormat(getMaxLengthofDecimal_pattern(Sirusi.operand1, Double.valueOf("0"), "+")).format(Sirusi.operand1);
                     displayTextview.setText(tvcache);
                     Log.e("inverseButton", Sirusi.operand1 + "");
                 }
 
             } else {
                 Sirusi.operand2 = -Sirusi.operand2;
-                tvcache = Sirusi.operand2.toString();
+                //tvcache = Sirusi.operand2.toString();
 
-                tvcache=new DecimalFormat(getMaxLengthofDecimal_pattern(Double.valueOf(tvcache), Double.valueOf("0"), "+")).format(Double.valueOf(tvcache));
+                tvcache=new DecimalFormat(getMaxLengthofDecimal_pattern(Double.valueOf(Sirusi.operand2), Double.valueOf("0"), "+")).format(Double.valueOf(Sirusi.operand2));
                 displayTextview.setText(tvcache);
                 //displayTextview.setText(tvcache);
                 //displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(Double.valueOf(tvcache), Double.valueOf("0"), "+")).format(Double.valueOf(tvcache)));
