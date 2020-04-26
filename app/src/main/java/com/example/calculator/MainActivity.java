@@ -426,52 +426,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//    private void setDispalyTextviewWith(String orogin_str)
-//    {
-//        Log.e("setDispalyTextviewWith_orogin_str",orogin_str);
-//        //String pattern = "(\\d*\\.)(\\d*)";
-//        String pattern = "(\\d*)(\\.)(\\d*)";
-//        Pattern r = Pattern.compile(pattern);
-//        Matcher m = r.matcher(orogin_str);
-//        String intpart="";
-//        String decpart="";
-//        if (m.find()) {
-//            intpart= m.group(1);
-//            decpart=m.group(3);
-//        }
-//        else if(orogin_str.length()>10)
-//        {
-//            displayTextview.setText(String.format("%E", orogin_str));
-//            return;
-//        }
-//        else
-//        {
-//            displayTextview.setText(orogin_str);
-//            return;
-//        }
-//
-//        // displayTextview.setText(String.format("%E", orogin_str));
-//        //displayTextview.setText(orogin_str);
-//        // displayTextview.setText(intpart+"+"+String.format("%E", decpart));
-//        Log.e("setDispalyTextviewWith_intpart",intpart);
-//        Log.e("setDispalyTextviewWith_decpart",decpart);
-//        if (orogin_str.length() >= 11) {
-//            if(intpart.length()>=10)
-//            {
-//                 displayTextview.setText(String.format("%E", orogin_str));
-//            }
-//            else
-//            {
-//                displayTextview.setText(orogin_str);
-//            }
-//        }
-//        else
-//        {
-//            displayTextview.setText(orogin_str);
-//        }
-//    }
-
-
     private Boolean isEexists(String str) {
         String pattern = ".*E.*";
         return Pattern.matches(pattern, str);
