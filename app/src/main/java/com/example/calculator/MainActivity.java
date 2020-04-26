@@ -334,16 +334,31 @@ public class MainActivity extends AppCompatActivity {
             Sirusi.operate = view.getText().toString();
         } else {
             if (Cached) {
-                //计算Cached并Cached=false;
-                Sirusi.operand1 = calculoneOperation(calculatecache, preOperate, calculoneOperation(Sirusi.operand1, Sirusi.operate, Sirusi.operand2));
-                //清空op2，计算缓存
-                Sirusi.operand2 = null;
-                tvcache = Sirusi.operand1.toString();
-                //displayTextview.setText(tvcache);
-                Sirusi.operate = view.getText().toString();
-                calculatecache = null;
-                preOperate = "null";
-                Cached = false;
+
+                if(!(Sirusi.operate.equals("+") || Sirusi.operate.equals("-")))
+                {
+                    //前一个不是+/-直接计算保留Cache
+                    //计算Cached并Cached=false;
+                    Sirusi.operand1 = calculoneOperation(Sirusi.operand1, Sirusi.operate, Sirusi.operand2);
+                    //清空op2，计算缓存
+                    Sirusi.operand2 = null;
+                    tvcache = Sirusi.operand1.toString();
+                    //displayTextview.setText(tvcache);
+                    Sirusi.operate = view.getText().toString();
+                }
+                else
+                {
+                    //计算Cached并Cached=false;
+                    Sirusi.operand1 = calculoneOperation(calculatecache, preOperate, calculoneOperation(Sirusi.operand1, Sirusi.operate, Sirusi.operand2));
+                    //清空op2，计算缓存
+                    Sirusi.operand2 = null;
+                    tvcache = Sirusi.operand1.toString();
+                    //displayTextview.setText(tvcache);
+                    Sirusi.operate = view.getText().toString();
+                    calculatecache = null;
+                    preOperate = "null";
+                    Cached = false;
+                }
             } else {
                 /*没有需要计算的cache */
 
