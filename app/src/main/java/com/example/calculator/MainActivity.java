@@ -25,9 +25,10 @@ public class MainActivity extends AppCompatActivity {
     private String preOperate = "null";
     private Button acbutton = null;
     private String tvcache = null;
-    private Double calculatecache = null;
+    private BigDecimal calculatecache = null;
     private Button selectedOperate_btn = null;
     private Boolean calculateComplete = false;
+    //private static final BigDecimal INFINITE_BIG_DECIMAL = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,17 +81,17 @@ public class MainActivity extends AppCompatActivity {
                     //在设置第1个小数点
                     tvcache = "0.";
                     displayTextview.setText(tvcache);
-                    Sirusi.operand1 = Double.valueOf("0.0");
+                    Sirusi.operand1 = new BigDecimal("0");
 
                 } else {
                     //在设置第2个以上小数点
                     if (!isDecimalPointAlreadyexists(tvcache)) {
                         tvcache += numButton.getText().toString();
-                        Sirusi.operand1 = Double.valueOf(tvcache);
+                        Sirusi.operand1 = new BigDecimal(tvcache);
 
                         // displayTextview.setText(new DecimalFormat("#,###").format(tvcache));
 
-                        displayTextview.setText(new DecimalFormat("#,###").format(Double.valueOf(tvcache + "0")) + ".");
+                        displayTextview.setText(new DecimalFormat("#,###").format(new BigDecimal(tvcache + "0")) + ".");
                     }
 
 
@@ -101,14 +102,14 @@ public class MainActivity extends AppCompatActivity {
                     //在设置第1个小数点
                     tvcache = 0 + numButton.getText().toString();
                     displayTextview.setText(0 + numButton.getText().toString());
-                    Sirusi.operand2 = Double.valueOf(tvcache + "0");
+                    Sirusi.operand2 = new BigDecimal(tvcache + "0");
                 } else {
                     //在设置第2个小数点
                     if (!isDecimalPointAlreadyexists(tvcache)) {
                         tvcache += numButton.getText().toString();
-                        Sirusi.operand2 = Double.valueOf(tvcache + "0");
+                        Sirusi.operand2 = new BigDecimal(tvcache + "0");
                         //displayTextview.setText(tvcache);
-                        displayTextview.setText(new DecimalFormat("#,###").format(Double.valueOf(tvcache + "0")) + ".");
+                        displayTextview.setText(new DecimalFormat("#,###").format(new BigDecimal(tvcache + "0")) + ".");
                     }
                 }
 
@@ -151,26 +152,26 @@ public class MainActivity extends AppCompatActivity {
                     //在设置第1个数字
                     tvcache = numButton.getText().toString();
                     displayTextview.setText(numButton.getText().toString());
-                    Sirusi.operand1 = Double.valueOf(tvcache);
+                    Sirusi.operand1 = new BigDecimal(tvcache);
 
                 } else {
                     //在设置第2个以上数字
 
-                    if (!(Sirusi.operand1 == 0.0 && numButton.getText().toString().equals("0"))) {
+                    if (!(Sirusi.operand1.equals(0.0)  && numButton.getText().toString().equals("0"))) {
                         tvcache += numButton.getText().toString();
-                        Sirusi.operand1 = Double.valueOf(tvcache);
+                        Sirusi.operand1 = new BigDecimal(tvcache);
                     } else {
-                        if (Sirusi.operand1 == 0.0 && !isDecimalPointAlreadyexists(tvcache)) {
+                        if (Sirusi.operand1.equals(0.0) && !isDecimalPointAlreadyexists(tvcache)) {
                             tvcache = numButton.getText().toString();
-                            Sirusi.operand1 = Double.valueOf(tvcache);
+                            Sirusi.operand1 = new BigDecimal(tvcache);
                         } else {
                             tvcache += numButton.getText().toString();
-                            Sirusi.operand1 = Double.valueOf(tvcache);
+                            Sirusi.operand1 = new BigDecimal(tvcache);
                         }
                     }
 
 
-                    displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(Double.valueOf(tvcache), Double.valueOf("0"), "+")).format(Double.valueOf(tvcache)));
+                    displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(new BigDecimal(tvcache), new BigDecimal("0"), "+")).format(new BigDecimal(tvcache)));
 
                     //displayTextview.setText(new DecimalFormat("#,###").format(Sirusi.operand1));
                     //displayTextview.setText(new DecimalFormat("#,###").format(Double.valueOf(tvcache)));
@@ -186,21 +187,21 @@ public class MainActivity extends AppCompatActivity {
                     //在设置第1个数字
                     tvcache = numButton.getText().toString();
                     displayTextview.setText(numButton.getText().toString());
-                    Sirusi.operand2 = Double.valueOf(tvcache);
+                    Sirusi.operand2 = new BigDecimal(tvcache);
                 } else {
-                    if (!(Sirusi.operand2 == 0.0 && numButton.getText().toString().equals("0"))) {
+                    if (!(Sirusi.operand2 .equals(0.0) && numButton.getText().toString().equals("0"))) {
                         tvcache += numButton.getText().toString();
-                        Sirusi.operand2 = Double.valueOf(tvcache);
+                        Sirusi.operand2 = new BigDecimal(tvcache);
                     } else {
-                        if (Sirusi.operand2 == 0.0 && !isDecimalPointAlreadyexists(tvcache)) {
+                        if (Sirusi.operand2 .equals(0.0) && !isDecimalPointAlreadyexists(tvcache)) {
                             tvcache = numButton.getText().toString();
-                            Sirusi.operand2 = Double.valueOf(tvcache);
+                            Sirusi.operand2 = new BigDecimal(tvcache);
                         } else {
                             tvcache += numButton.getText().toString();
-                            Sirusi.operand2 = Double.valueOf(tvcache);
+                            Sirusi.operand2 = new BigDecimal(tvcache);
                         }
                     }
-                    displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(Double.valueOf(tvcache), Double.valueOf("0"), "+")).format(Double.valueOf(tvcache)));
+                    displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(new BigDecimal(tvcache), new BigDecimal("0"), "+")).format(new BigDecimal(tvcache)));
                     //displayTextview.setText(tvcache);
                     //displayTextview.setText(new DecimalFormat("#,###").format(Sirusi.operand2));
                     //displayTextview.setText(new DecimalFormat("#,###").format(Double.valueOf(tvcache)));
@@ -285,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
     public void addORsub_onClick(Button view) {
         //如果用户没输入op1直接按
         if (Sirusi.operate.equals("null") && Sirusi.operand1 == null) {
-            Sirusi.operand1 = 0.0;
+            Sirusi.operand1 = new BigDecimal("0");
             Sirusi.operate = view.getText().toString();
         }
         //用户没输入op2
@@ -326,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
     public void mulORdiv_onClick(Button view) {
 
         if (Sirusi.operate.equals("null") && Sirusi.operand1 == null) {
-            Sirusi.operand1 = 0.0;
+            Sirusi.operand1.equals(new BigDecimal("0"));
             Sirusi.operate = view.getText().toString();
         }
         //用户没输入op2
@@ -390,7 +391,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public int getLengthofDecimal_int(Double orogin) {
+    public int getLengthofDecimal_int(BigDecimal orogin) {
         BigDecimal bd = new BigDecimal(orogin.toString());
         String pattern = ".*\\..*";
         String orogin_str = bd.toPlainString();
@@ -413,7 +414,7 @@ public class MainActivity extends AppCompatActivity {
             return 0;
     }
 
-    public String getMaxLengthofDecimal_pattern(Double a, Double b, String oper) {
+    public String getMaxLengthofDecimal_pattern(BigDecimal a, BigDecimal b, String oper) {
         int lengthOfa = getLengthofDecimal_int(a);
         int lengthOfb = getLengthofDecimal_int(b);
         int maxLength;
@@ -445,13 +446,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public Double calculoneOperation(Double a, String operate, Double b) {
+    public BigDecimal calculoneOperation(BigDecimal a, String operate, BigDecimal b) {
         String res;
-        Double result = 0.0;
+        BigDecimal result;
         switch (operate) {
             case "+":
 
-                result = a + b;
+                result = a.add(b);
                 if (isEexists(result.toString())) {
                     displayTextview.setText(result.toString());
                     return result;
@@ -460,7 +461,7 @@ public class MainActivity extends AppCompatActivity {
                     return result;
                 }
             case "-":
-                result = a - b;
+                result = a.subtract(b);
                 if (isEexists(result.toString())) {
                     displayTextview.setText(result.toString());
                     return result;
@@ -469,7 +470,7 @@ public class MainActivity extends AppCompatActivity {
                     return result;
                 }
             case "×":
-                result = a * b;
+                result = a.multiply(b);
                 if (isEexists(result.toString())) {
                     displayTextview.setText(result.toString());
                     return result;
@@ -478,8 +479,11 @@ public class MainActivity extends AppCompatActivity {
                     return result;
                 }
             case "÷":
-                result = a / b;
-                if(result==Double.POSITIVE_INFINITY||result==Double.NEGATIVE_INFINITY)//如果计算结果为无限的话
+
+
+
+
+                if(Sirusi.operand2.equals(0))//如果计算结果为无限的话
                 {
                     Sirusi.operand1 = null;
                     Sirusi.operand2 = null;
@@ -488,10 +492,20 @@ public class MainActivity extends AppCompatActivity {
                     preOperate = "null";
                     calculatecache=null;
                     calculateComplete = true;
-                    displayTextview.setText(result.toString());
+                    displayTextview.setText("infinity");
                 }
 
                 else {
+                    try{
+                        result = a.divide(b);
+                    }
+                    catch (Exception e)
+                    {
+                        result = a.divide(b,10,BigDecimal.ROUND_HALF_UP);
+                        Log.e("BigDecimaldivide",e.toString());
+
+                    }
+
                     if (isEexists(result.toString())) {
                         displayTextview.setText(result.toString());
                         return result;
@@ -518,19 +532,19 @@ public class MainActivity extends AppCompatActivity {
                     displayTextview.setText("0");
                     Log.e("inverseButton", Sirusi.operand1 + "");
                 } else {
-                    Sirusi.operand1 = -Sirusi.operand1;
+                    Sirusi.operand1 = Sirusi.operand1.multiply(new BigDecimal(-1));
                     //tvcache = Sirusi.operand1.toString();
                     //displayTextview.setText(tvcache);
-                    tvcache=new DecimalFormat(getMaxLengthofDecimal_pattern(Sirusi.operand1, Double.valueOf("0"), "+")).format(Sirusi.operand1);
+                    tvcache=new DecimalFormat(getMaxLengthofDecimal_pattern(Sirusi.operand1, new BigDecimal("0"), "+")).format(Sirusi.operand1);
                     displayTextview.setText(tvcache);
                     Log.e("inverseButton", Sirusi.operand1 + "");
                 }
 
             } else {
-                Sirusi.operand2 = -Sirusi.operand2;
+                Sirusi.operand2 = Sirusi.operand2.multiply(new BigDecimal(-1));
                 //tvcache = Sirusi.operand2.toString();
 
-                tvcache=new DecimalFormat(getMaxLengthofDecimal_pattern(Double.valueOf(Sirusi.operand2), Double.valueOf("0"), "+")).format(Double.valueOf(Sirusi.operand2));
+                tvcache=new DecimalFormat(getMaxLengthofDecimal_pattern(Sirusi.operand2,  new BigDecimal("0"), "+")).format( Sirusi.operand2);
                 displayTextview.setText(tvcache);
                 //displayTextview.setText(tvcache);
                 //displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(Double.valueOf(tvcache), Double.valueOf("0"), "+")).format(Double.valueOf(tvcache)));
@@ -549,28 +563,30 @@ public class MainActivity extends AppCompatActivity {
             if (selectedOperate_btn != null)
                 init_opButtonnotSelectedState();
             calculateComplete = false;
-            if ((Double.valueOf(tvcache) + 0.0) == Sirusi.operand1 || Sirusi.operand1 == null) {
+            if (new BigDecimal("0").equals(Sirusi.operand1)  || Sirusi.operand1 == null) {
                 if (Sirusi.operand1 == null) {
-                    Sirusi.operand1 = Double.valueOf(tvcache);
+                    Sirusi.operand1 = new BigDecimal(tvcache);
                     tvcache = Sirusi.operand1.toString();
                     displayTextview.setText(tvcache);
                     Log.e("inverseButton", Sirusi.operand1 + "");
                 } else {
 
-                    int resdec = getLengthofDecimal_int(Sirusi.operand1 / 100);
+                    int resdec = getLengthofDecimal_int(Sirusi.operand1.divide( new BigDecimal("100")));
 
                     Log.e("dec", resdec + "个");
                     if (resdec >= 10) {
                         int dec = getLengthofDecimal_int(Sirusi.operand1) + 2;
-                        Sirusi.operand1 = Double.valueOf(String.format(new String("%." + dec + "f"), Sirusi.operand1 / 100));
+
+                        //问题很大
+                        Sirusi.operand1 =  new BigDecimal(String.format(new String("%." + dec + "f"), Sirusi.operand1.divide( new BigDecimal("100"))));
                     } else {
-                        Sirusi.operand1 = Sirusi.operand1 / 100;
+                        Sirusi.operand1 = Sirusi.operand1.divide(new BigDecimal("100"));
                     }
 
 
                     tvcache = Sirusi.operand1.toString();
                     //displayTextview.setText(tvcache);
-                    displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(Double.valueOf(tvcache), Double.valueOf("0"), "+")).format(Double.valueOf(tvcache)));
+                    displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(new BigDecimal(tvcache), new BigDecimal("0"), "+")).format(new BigDecimal(tvcache)));
 
                     Log.e("inverseButton", Sirusi.operand1 + "");
                 }
@@ -582,20 +598,20 @@ public class MainActivity extends AppCompatActivity {
 //                displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(Double.valueOf(tvcache),Double.valueOf("0"),"+")).format(Double.valueOf(tvcache)));
 //                Log.e("inverseButton",Sirusi.operand2+"");
 
-                int resdec = getLengthofDecimal_int(Sirusi.operand2 / 100);
+                int resdec = getLengthofDecimal_int(Sirusi.operand2.divide(new BigDecimal("100")));
 
                 Log.e("dec", resdec + "个");
                 if (resdec >= 10) {
                     int dec = getLengthofDecimal_int(Sirusi.operand2) + 2;
-                    Sirusi.operand2 = Double.valueOf(String.format(new String("%." + dec + "f"), Sirusi.operand2 / 100));
+                    Sirusi.operand2 =  new BigDecimal(String.format(new String("%." + dec + "f"), Sirusi.operand2.divide( new BigDecimal("100"))));
                 } else {
-                    Sirusi.operand2 = Sirusi.operand2 / 100;
+                    Sirusi.operand2 = Sirusi.operand2.divide(new BigDecimal("100"));
                 }
 
 
                 tvcache = Sirusi.operand2.toString();
                 //displayTextview.setText(tvcache);
-                displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(Double.valueOf(tvcache), Double.valueOf("0"), "+")).format(Double.valueOf(tvcache)));
+                displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(new BigDecimal(tvcache), new BigDecimal("0"), "+")).format(new BigDecimal(tvcache)));
 
                 Log.e("inverseButton", Sirusi.operand1 + "");
 
@@ -647,7 +663,7 @@ public class MainActivity extends AppCompatActivity {
                     calculateComplete = true;
                 } catch (Exception e) {
                     if (Sirusi.operand1 == null)
-                        Sirusi.operand1 = Double.valueOf(tvcache);
+                        Sirusi.operand1 = new BigDecimal(tvcache);
 
                     //处理结果并显示
                     //Sirusi.operand1=calculoneOperation(Sirusi.operand1,Sirusi.operate,Sirusi.operand2);
@@ -655,7 +671,7 @@ public class MainActivity extends AppCompatActivity {
                     Sirusi.operand2 = null;
                     tvcache = Sirusi.operand1.toString();
 
-                    displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(Double.valueOf(tvcache), Double.valueOf("0"), "+")).format(Double.valueOf(tvcache)));
+                    displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern( new BigDecimal(tvcache),  new BigDecimal("0"), "+")).format( new BigDecimal(tvcache)));
 
                     //displayTextview.setText(tvcache);
                     Sirusi.operate = "null";
