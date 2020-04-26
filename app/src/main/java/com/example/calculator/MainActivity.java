@@ -12,6 +12,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private BigDecimal calculatecache = null;
     private Button selectedOperate_btn = null;
     private Boolean calculateComplete = false;
+
     //private static final BigDecimal INFINITE_BIG_DECIMAL = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,11 +160,11 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     //在设置第2个以上数字
 
-                    if (!(Sirusi.operand1.equals(0.0)  && numButton.getText().toString().equals("0"))) {
+                    if (!(Sirusi.operand1.compareTo(BigDecimal.ZERO) == 0 || numButton.getText().toString().equals("0"))) {
                         tvcache += numButton.getText().toString();
                         Sirusi.operand1 = new BigDecimal(tvcache);
                     } else {
-                        if (Sirusi.operand1.equals(0.0) && !isDecimalPointAlreadyexists(tvcache)) {
+                        if (Sirusi.operand1.compareTo(BigDecimal.ZERO) == 0 && !isDecimalPointAlreadyexists(tvcache)) {
                             tvcache = numButton.getText().toString();
                             Sirusi.operand1 = new BigDecimal(tvcache);
                         } else {
@@ -170,8 +173,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
-
-                    displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(new BigDecimal(tvcache), new BigDecimal("0"), "+")).format(new BigDecimal(tvcache)));
+                    //displayTextview.setText(tvcache);
+                    displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(new BigDecimal(tvcache), new BigDecimal("0"), "+", "0")).format(new BigDecimal(tvcache)));
+                    //displayTextview.setText(new DecimalFormat(getDecimalLength_int_Double(tvcache)).format(tvcache));
 
                     //displayTextview.setText(new DecimalFormat("#,###").format(Sirusi.operand1));
                     //displayTextview.setText(new DecimalFormat("#,###").format(Double.valueOf(tvcache)));
@@ -189,11 +193,11 @@ public class MainActivity extends AppCompatActivity {
                     displayTextview.setText(numButton.getText().toString());
                     Sirusi.operand2 = new BigDecimal(tvcache);
                 } else {
-                    if (!(Sirusi.operand2 .equals(0.0) && numButton.getText().toString().equals("0"))) {
+                    if (!(Sirusi.operand2.compareTo(BigDecimal.ZERO) == 0 || numButton.getText().toString().equals("0"))) {
                         tvcache += numButton.getText().toString();
                         Sirusi.operand2 = new BigDecimal(tvcache);
                     } else {
-                        if (Sirusi.operand2 .equals(0.0) && !isDecimalPointAlreadyexists(tvcache)) {
+                        if (Sirusi.operand2.compareTo(BigDecimal.ZERO) == 0 && !isDecimalPointAlreadyexists(tvcache)) {
                             tvcache = numButton.getText().toString();
                             Sirusi.operand2 = new BigDecimal(tvcache);
                         } else {
@@ -201,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
                             Sirusi.operand2 = new BigDecimal(tvcache);
                         }
                     }
-                    displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(new BigDecimal(tvcache), new BigDecimal("0"), "+")).format(new BigDecimal(tvcache)));
+                    displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(new BigDecimal(tvcache), new BigDecimal("0"), "+", "0")).format(new BigDecimal(tvcache)));
                     //displayTextview.setText(tvcache);
                     //displayTextview.setText(new DecimalFormat("#,###").format(Sirusi.operand2));
                     //displayTextview.setText(new DecimalFormat("#,###").format(Double.valueOf(tvcache)));
@@ -336,8 +340,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             if (Cached) {
 
-                if(!(Sirusi.operate.equals("+") || Sirusi.operate.equals("-")))
-                {
+                if (!(Sirusi.operate.equals("+") || Sirusi.operate.equals("-"))) {
                     //前一个不是+/-直接计算保留Cache
                     //计算Cached并Cached=false;
                     Sirusi.operand1 = calculoneOperation(Sirusi.operand1, Sirusi.operate, Sirusi.operand2);
@@ -346,9 +349,7 @@ public class MainActivity extends AppCompatActivity {
                     tvcache = Sirusi.operand1.toString();
                     //displayTextview.setText(tvcache);
                     Sirusi.operate = view.getText().toString();
-                }
-                else
-                {
+                } else {
                     //计算Cached并Cached=false;
                     Sirusi.operand1 = calculoneOperation(calculatecache, preOperate, calculoneOperation(Sirusi.operand1, Sirusi.operate, Sirusi.operand2));
                     //清空op2，计算缓存
@@ -406,15 +407,12 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("orogin.toString()", orogin_str);
                 Log.e("Decimal", m.group(2));
             }
-            if (m.group(2).equals("0"))
-                return 0;
-            else
-                return temp.toCharArray().length;
+            return temp.toCharArray().length;
         } else
             return 0;
     }
 
-    public String getMaxLengthofDecimal_pattern(BigDecimal a, BigDecimal b, String oper) {
+    public String getMaxLengthofDecimal_pattern(BigDecimal a, BigDecimal b, String oper, String parameter) {
         int lengthOfa = getLengthofDecimal_int(a);
         int lengthOfb = getLengthofDecimal_int(b);
         int maxLength;
@@ -426,16 +424,16 @@ public class MainActivity extends AppCompatActivity {
         } else
             maxLength = lengthOfa + lengthOfb;//以后再说
 
-
+        Log.e("maxLength", maxLength + "");
         String temp = "";
         for (int i = 0; i < maxLength; i++)
-            temp += "#";
+            temp += parameter;
 
-        //Log.e("pattern", "#,###."+temp);
+        Log.e("pattern", "#,##0." + temp);
         if (maxLength == 0) {
-            return "#,###";
+            return "#,##0";
         } else {
-            return "#,###." + temp;
+            return "#,##0." + temp;
         }
     }
 
@@ -453,11 +451,12 @@ public class MainActivity extends AppCompatActivity {
             case "+":
 
                 result = a.add(b);
-                if (isEexists(result.toString())) {
-                    displayTextview.setText(result.toString());
+                if (result.toString().length() >= 10) {
+                    result = new BigDecimal(result.toString(), new MathContext(3, RoundingMode.HALF_UP));
+                    displayTextview.setText(result.toEngineeringString());
                     return result;
                 } else {
-                    displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(a, b, operate)).format(result));
+                    displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(a, b, operate, "#")).format(result));
                     return result;
                 }
             case "-":
@@ -466,7 +465,7 @@ public class MainActivity extends AppCompatActivity {
                     displayTextview.setText(result.toString());
                     return result;
                 } else {
-                    displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(a, b, operate)).format(result));
+                    displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(a, b, operate, "#")).format(result));
                     return result;
                 }
             case "×":
@@ -475,34 +474,28 @@ public class MainActivity extends AppCompatActivity {
                     displayTextview.setText(result.toString());
                     return result;
                 } else {
-                    displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(a, b, operate)).format(result));
+                    displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(a, b, operate, "#")).format(result));
                     return result;
                 }
             case "÷":
 
 
-
-
-                if(Sirusi.operand2.equals(0))//如果计算结果为无限的话
+                if (Sirusi.operand2.compareTo(BigDecimal.ZERO)==0)//如果计算结果为无限的话
                 {
                     Sirusi.operand1 = null;
                     Sirusi.operand2 = null;
                     Sirusi.operate = "null";
                     tvcache = null;
                     preOperate = "null";
-                    calculatecache=null;
+                    calculatecache = null;
                     calculateComplete = true;
                     displayTextview.setText("infinity");
-                }
-
-                else {
-                    try{
+                } else {
+                    try {
                         result = a.divide(b);
-                    }
-                    catch (Exception e)
-                    {
-                        result = a.divide(b,10,BigDecimal.ROUND_HALF_UP);
-                        Log.e("BigDecimaldivide",e.toString());
+                    } catch (Exception e) {
+                        result = a.divide(b, 10, BigDecimal.ROUND_HALF_UP);
+                        Log.e("BigDecimaldivide", e.toString());
 
                     }
 
@@ -525,7 +518,7 @@ public class MainActivity extends AppCompatActivity {
             if (selectedOperate_btn != null)
                 init_opButtonnotSelectedState();
             calculateComplete = false;
-            if (Sirusi.operate.equals("null")|| Sirusi.operand1 == null) {
+            if (Sirusi.operate.equals("null") || Sirusi.operand1 == null) {
                 if (Sirusi.operand1 == null) {
                     //Sirusi.operand1 = 0.0;
                     //tvcache = Sirusi.operand1.toString();
@@ -535,7 +528,7 @@ public class MainActivity extends AppCompatActivity {
                     Sirusi.operand1 = Sirusi.operand1.multiply(new BigDecimal(-1));
                     //tvcache = Sirusi.operand1.toString();
                     //displayTextview.setText(tvcache);
-                    tvcache=new DecimalFormat(getMaxLengthofDecimal_pattern(Sirusi.operand1, new BigDecimal("0"), "+")).format(Sirusi.operand1);
+                    tvcache = new DecimalFormat(getMaxLengthofDecimal_pattern(Sirusi.operand1, new BigDecimal("0"), "+", "#")).format(Sirusi.operand1);
                     displayTextview.setText(tvcache);
                     Log.e("inverseButton", Sirusi.operand1 + "");
                 }
@@ -544,7 +537,7 @@ public class MainActivity extends AppCompatActivity {
                 Sirusi.operand2 = Sirusi.operand2.multiply(new BigDecimal(-1));
                 //tvcache = Sirusi.operand2.toString();
 
-                tvcache=new DecimalFormat(getMaxLengthofDecimal_pattern(Sirusi.operand2,  new BigDecimal("0"), "+")).format( Sirusi.operand2);
+                tvcache = new DecimalFormat(getMaxLengthofDecimal_pattern(Sirusi.operand2, new BigDecimal("0"), "+", "#")).format(Sirusi.operand2);
                 displayTextview.setText(tvcache);
                 //displayTextview.setText(tvcache);
                 //displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(Double.valueOf(tvcache), Double.valueOf("0"), "+")).format(Double.valueOf(tvcache)));
@@ -560,68 +553,44 @@ public class MainActivity extends AppCompatActivity {
 
     public void percentButton_onClick(View view) {
         try {
+
+
             if (selectedOperate_btn != null)
                 init_opButtonnotSelectedState();
             calculateComplete = false;
-            if (new BigDecimal("0").equals(Sirusi.operand1)  || Sirusi.operand1 == null) {
+            if (Sirusi.operate.equals("null") || Sirusi.operand1 == null) {
                 if (Sirusi.operand1 == null) {
-                    Sirusi.operand1 = new BigDecimal(tvcache);
-                    tvcache = Sirusi.operand1.toString();
-                    displayTextview.setText(tvcache);
-                    Log.e("inverseButton", Sirusi.operand1 + "");
+                    //Sirusi.operand1 = 0.0;
+                    //tvcache = Sirusi.operand1.toString();
+                    displayTextview.setText("0");
+                    Log.e("percentButton", Sirusi.operand1 + "");
                 } else {
-
-                    int resdec = getLengthofDecimal_int(Sirusi.operand1.divide( new BigDecimal("100")));
-
-                    Log.e("dec", resdec + "个");
-                    if (resdec >= 10) {
-                        int dec = getLengthofDecimal_int(Sirusi.operand1) + 2;
-
-                        //问题很大
-                        Sirusi.operand1 =  new BigDecimal(String.format(new String("%." + dec + "f"), Sirusi.operand1.divide( new BigDecimal("100"))));
-                    } else {
-                        Sirusi.operand1 = Sirusi.operand1.divide(new BigDecimal("100"));
-                    }
-
-
-                    tvcache = Sirusi.operand1.toString();
+                    Sirusi.operand1 = Sirusi.operand1.divide(new BigDecimal("100"));
+                    //tvcache = Sirusi.operand1.toString();
                     //displayTextview.setText(tvcache);
-                    displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(new BigDecimal(tvcache), new BigDecimal("0"), "+")).format(new BigDecimal(tvcache)));
-
-                    Log.e("inverseButton", Sirusi.operand1 + "");
+                    tvcache = new DecimalFormat(getMaxLengthofDecimal_pattern(Sirusi.operand1, new BigDecimal("0"), "+", "#")).format(Sirusi.operand1);
+                    displayTextview.setText(tvcache);
+                    Log.e("percentButton", Sirusi.operand1 + "");
                 }
 
             } else {
-//                Sirusi.operand2=Sirusi.operand2/100;
-//                tvcache=Sirusi.operand2.toString();
-//                //displayTextview.setText(tvcache);
-//                displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(Double.valueOf(tvcache),Double.valueOf("0"),"+")).format(Double.valueOf(tvcache)));
-//                Log.e("inverseButton",Sirusi.operand2+"");
+                Sirusi.operand2 = Sirusi.operand2.divide(new BigDecimal("100"));
+                //tvcache = Sirusi.operand2.toString();
 
-                int resdec = getLengthofDecimal_int(Sirusi.operand2.divide(new BigDecimal("100")));
-
-                Log.e("dec", resdec + "个");
-                if (resdec >= 10) {
-                    int dec = getLengthofDecimal_int(Sirusi.operand2) + 2;
-                    Sirusi.operand2 =  new BigDecimal(String.format(new String("%." + dec + "f"), Sirusi.operand2.divide( new BigDecimal("100"))));
-                } else {
-                    Sirusi.operand2 = Sirusi.operand2.divide(new BigDecimal("100"));
-                }
-
-
-                tvcache = Sirusi.operand2.toString();
+                tvcache = new DecimalFormat(getMaxLengthofDecimal_pattern(Sirusi.operand2, new BigDecimal("0"), "+", "#")).format(Sirusi.operand2);
+                displayTextview.setText(tvcache);
                 //displayTextview.setText(tvcache);
-                displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(new BigDecimal(tvcache), new BigDecimal("0"), "+")).format(new BigDecimal(tvcache)));
-
-                Log.e("inverseButton", Sirusi.operand1 + "");
-
-
+                //displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(Double.valueOf(tvcache), Double.valueOf("0"), "+")).format(Double.valueOf(tvcache)));
+                Log.e("percentButton", Sirusi.operand2 + "");
             }
         } catch (Exception e) {
 
-            Log.e("inverseButton", e.toString());
+            Log.e("percentButton", e.toString());
 
         }
+
+
+//
     }
 
 
@@ -671,7 +640,7 @@ public class MainActivity extends AppCompatActivity {
                     Sirusi.operand2 = null;
                     tvcache = Sirusi.operand1.toString();
 
-                    displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern( new BigDecimal(tvcache),  new BigDecimal("0"), "+")).format( new BigDecimal(tvcache)));
+                    displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(new BigDecimal(tvcache), new BigDecimal("0"), "+", "#")).format(new BigDecimal(tvcache)));
 
                     //displayTextview.setText(tvcache);
                     Sirusi.operate = "null";
