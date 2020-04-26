@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private Double calculatecache = null;
     private Button selectedOperate_btn = null;
     private Boolean calculateComplete = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         String pattern = ".*\\..*";
         return Pattern.matches(pattern, str);
     }
-
 
     //小数点点击
     public void decimalpointButton_onClick(View view) {
@@ -593,7 +591,8 @@ public class MainActivity extends AppCompatActivity {
             //计算结果
             if (Cached) {
                 //计算Cached并Cached=false;
-                Sirusi.operand1 = calculoneOperation(calculatecache, preOperate, Sirusi.operand1);
+                //Sirusi.operand1 = calculoneOperation(calculatecache, preOperate, Sirusi.operand1);
+                Sirusi.operand1 = calculoneOperation(calculatecache, preOperate, calculoneOperation(Sirusi.operand1, Sirusi.operate, Sirusi.operand2));
                 //清空op2，计算缓存
                 Sirusi.operand2 = null;
                 tvcache = Sirusi.operand1.toString();
