@@ -479,13 +479,27 @@ public class MainActivity extends AppCompatActivity {
                 }
             case "÷":
                 result = a / b;
-                if (isEexists(result.toString())) {
+                if(result==Double.POSITIVE_INFINITY||result==Double.NEGATIVE_INFINITY)//如果计算结果为无限的话
+                {
+                    Sirusi.operand1 = null;
+                    Sirusi.operand2 = null;
+                    Sirusi.operate = "null";
+                    tvcache = null;
+                    preOperate = "null";
+                    calculatecache=null;
+                    calculateComplete = true;
                     displayTextview.setText(result.toString());
-                    return result;
-                } else {
-                    displayTextview.setText(result.toString());
-                    //displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(a,b,operate)).format(result));
-                    return result;
+                }
+
+                else {
+                    if (isEexists(result.toString())) {
+                        displayTextview.setText(result.toString());
+                        return result;
+                    } else {
+                        displayTextview.setText(result.toString());
+                        //displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(a,b,operate)).format(result));
+                        return result;
+                    }
                 }
         }
         return null;
