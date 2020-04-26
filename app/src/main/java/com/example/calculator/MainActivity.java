@@ -3,6 +3,7 @@ package com.example.calculator;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,8 +34,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         acbutton = findViewById(R.id.ac_Button);
-
         displayTextview = findViewById(R.id.display_tv);
+
+        //换H_Helvetica.ttc字体
+        //displayTextview.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/helvetica.ttc"));
+
     }
 
 
@@ -536,15 +540,19 @@ public class MainActivity extends AppCompatActivity {
                     Sirusi.operand1 = -Sirusi.operand1;
                     tvcache = Sirusi.operand1.toString();
                     //displayTextview.setText(tvcache);
-                    displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(Double.valueOf(tvcache), Double.valueOf("0"), "+")).format(Double.valueOf(tvcache)));
+                    tvcache=new DecimalFormat(getMaxLengthofDecimal_pattern(Double.valueOf(tvcache), Double.valueOf("0"), "+")).format(Double.valueOf(tvcache));
+                    displayTextview.setText(tvcache);
                     Log.e("inverseButton", Sirusi.operand1 + "");
                 }
 
             } else {
                 Sirusi.operand2 = -Sirusi.operand2;
                 tvcache = Sirusi.operand2.toString();
+
+                tvcache=new DecimalFormat(getMaxLengthofDecimal_pattern(Double.valueOf(tvcache), Double.valueOf("0"), "+")).format(Double.valueOf(tvcache));
+                displayTextview.setText(tvcache);
                 //displayTextview.setText(tvcache);
-                displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(Double.valueOf(tvcache), Double.valueOf("0"), "+")).format(Double.valueOf(tvcache)));
+                //displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(Double.valueOf(tvcache), Double.valueOf("0"), "+")).format(Double.valueOf(tvcache)));
                 Log.e("inverseButton", Sirusi.operand2 + "");
             }
         } catch (Exception e) {
