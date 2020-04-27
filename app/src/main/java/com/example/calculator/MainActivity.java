@@ -129,6 +129,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void numButton_onClick(View view) {
+
+
+
+
+
+
         if (calculateComplete) {
             Sirusi.operand1 = null;
             Sirusi.operand2 = null;
@@ -141,12 +147,13 @@ public class MainActivity extends AppCompatActivity {
 
         try {
 
-
+            //init layout
             if (selectedOperate_btn != null)
                 init_opButtonnotSelectedState();
             acbutton.setText("C");
             //Calculated = false;
             Button numButton = (Button) view;
+
 
 
             //在设置operand1
