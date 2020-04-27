@@ -458,7 +458,8 @@ public class MainActivity extends AppCompatActivity {
             case "+":
 
                 result = a.add(b);
-                if (result.toString().length() >= 10) {
+                Log.e("calculoneOperationresult", result.toString());
+                if (result.toPlainString().length() >= 10) {
                     result = new BigDecimal(result.toString(), new MathContext(3, RoundingMode.HALF_UP));
                     displayTextview.setText(result.toEngineeringString());
                     return result;
