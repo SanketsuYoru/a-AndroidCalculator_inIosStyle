@@ -4,11 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import java.math.BigDecimal;
@@ -22,7 +23,6 @@ import java.util.regex.Pattern;
 public class MainActivity extends AppCompatActivity {
 
     private TextView displayTextview = null;
-    //private Boolean Calculated=false;
     private Boolean Cached = false;
     private String preOperate = "null";
     private Button acbutton = null;
@@ -39,8 +39,13 @@ public class MainActivity extends AppCompatActivity {
         acbutton = findViewById(R.id.ac_Button);
         displayTextview = findViewById(R.id.display_tv);
 
-        //换H_Helvetica.ttc字体
-        //displayTextview.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/helvetica.ttc"));
+          if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.KITKAT) {
+            //透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+
+        //换System San Francisco Display light.ttf字体
+        displayTextview.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/systemsanfranciscodisplaythin.ttf"));
 
     }
 
@@ -131,10 +136,6 @@ public class MainActivity extends AppCompatActivity {
     public void numButton_onClick(View view) {
 
 
-
-
-
-
         if (calculateComplete) {
             Sirusi.operand1 = null;
             Sirusi.operand2 = null;
@@ -153,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
             acbutton.setText("C");
             //Calculated = false;
             Button numButton = (Button) view;
-
 
 
             //在设置operand1
@@ -338,7 +338,7 @@ public class MainActivity extends AppCompatActivity {
     public void mulORdiv_onClick(Button view) {
 
         if (Sirusi.operate.equals("null") && Sirusi.operand1 == null) {
-            Sirusi.operand1=new BigDecimal("0");
+            Sirusi.operand1 = new BigDecimal("0");
             Sirusi.operate = view.getText().toString();
         }
         //用户没输入op2
@@ -469,8 +469,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             case "-":
                 result = a.subtract(b);
-                if (isEexists(result.toString())) {
-                    displayTextview.setText(result.toString());
+                if (result.toPlainString().length() >= 10) {
+                    result = new BigDecimal(result.toString(), new MathContext(3, RoundingMode.HALF_UP));
+                    displayTextview.setText(result.toEngineeringString());
                     return result;
                 } else {
                     displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(a, b, operate, "#")).format(result));
@@ -478,8 +479,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             case "×":
                 result = a.multiply(b);
-                if (isEexists(result.toString())) {
-                    displayTextview.setText(result.toString());
+                if (result.toPlainString().length() >= 10) {
+                    result = new BigDecimal(result.toString(), new MathContext(3, RoundingMode.HALF_UP));
+                    displayTextview.setText(result.toEngineeringString());
                     return result;
                 } else {
                     displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(a, b, operate, "#")).format(result));
@@ -488,7 +490,7 @@ public class MainActivity extends AppCompatActivity {
             case "÷":
 
 
-                if (Sirusi.operand2.compareTo(BigDecimal.ZERO)==0)//如果计算结果为无限的话
+                if (Sirusi.operand2.compareTo(BigDecimal.ZERO) == 0)//如果计算结果为无限的话
                 {
                     Sirusi.operand1 = null;
                     Sirusi.operand2 = null;
@@ -498,6 +500,7 @@ public class MainActivity extends AppCompatActivity {
                     calculatecache = null;
                     calculateComplete = true;
                     displayTextview.setText("infinity");
+
                 } else {
                     try {
                         result = a.divide(b);
@@ -507,12 +510,12 @@ public class MainActivity extends AppCompatActivity {
 
                     }
 
-                    if (isEexists(result.toString())) {
-                        displayTextview.setText(result.toString());
+                    if (result.toPlainString().length() >= 10) {
+                        result = new BigDecimal(result.toString(), new MathContext(3, RoundingMode.HALF_UP));
+                        displayTextview.setText(result.toEngineeringString());
                         return result;
                     } else {
-                        displayTextview.setText(result.toString());
-                        //displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(a,b,operate)).format(result));
+                        displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(a, b, operate, "#")).format(result));
                         return result;
                     }
                 }

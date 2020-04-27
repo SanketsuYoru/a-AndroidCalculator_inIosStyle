@@ -28,14 +28,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_gravity="bottom"
-                android:autoSizeMaxTextSize="72sp"
+                android:autoSizeMaxTextSize="80sp"
 
                 android:autoSizeMinTextSize="30sp"
                 android:autoSizeTextType="uniform"
                 android:gravity="right"
                 android:text="0"
                 android:textColor="#FFFFFF"
-                android:textSize="72sp"
+                android:textSize="80sp"
                 android:textStyle="normal"></TextView>
         </LinearLayout>
 
