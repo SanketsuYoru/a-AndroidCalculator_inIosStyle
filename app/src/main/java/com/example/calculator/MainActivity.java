@@ -338,7 +338,7 @@ public class MainActivity extends AppCompatActivity {
     public void mulORdiv_onClick(Button view) {
 
         if (Sirusi.operate.equals("null") && Sirusi.operand1 == null) {
-            Sirusi.operand1.equals(new BigDecimal("0"));
+            Sirusi.operand1=new BigDecimal("0");
             Sirusi.operate = view.getText().toString();
         }
         //用户没输入op2
