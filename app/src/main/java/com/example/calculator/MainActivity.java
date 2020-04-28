@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.graphics.Typeface;
+import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     private BigDecimal calculatecache = null;
     private Button selectedOperate_btn = null;
     private Boolean calculateComplete = false;
+    private SoundPool soundPool;//音频通知声音播放器
+    private int soundID1;//音频资源ID1
+    private int soundID2;//音频资源ID2
 
     //private static final BigDecimal INFINITE_BIG_DECIMAL = null;
     @Override
@@ -47,6 +51,27 @@ public class MainActivity extends AppCompatActivity {
         //换System San Francisco Display light.ttf字体
         displayTextview.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/systemsanfranciscodisplaythin.ttf"));
 
+        //init Button Click Sound
+        initSound();
+    }
+
+    private void initSound() {
+        soundPool = new SoundPool.Builder().build();
+        soundID1=soundPool.load(this, R.raw.sound_button_click, 1);
+        soundID2 = soundPool.load(this, R.raw.switch_on, 1);
+    }//实例化soundPool和soundID  R.raw.qipao为音频资源位置
+
+
+
+    private void playSound(int soundID) {
+        soundPool.play(
+                soundID,
+                0.1f,      //左耳道音量【0~1】
+                0.5f,      //右耳道音量【0~1】
+                0,         //播放优先级【0表示最低优先级】
+                0,         //循环模式【0表示循环一次，-1表示一直循环，其他表示数字+1表示当前数字对应的循环次数】
+                1          //播放速度【1是正常，范围从0~2】
+        );
     }
 
 
@@ -57,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
     //小数点点击
     public void decimalpointButton_onClick(View view) {
+        playSound(soundID1);
         if (calculateComplete) {
             Sirusi.operand1 = null;
             Sirusi.operand2 = null;
@@ -134,6 +160,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void numButton_onClick(View view) {
+
+        playSound(soundID1);
 
 
         if (calculateComplete) {
@@ -231,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ACButton_onClick(View view) {
-
+        playSound(soundID1);
 
         try {
             if (acbutton.getText().toString().equals("C")) {
@@ -525,6 +553,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void inverseButton_onClick(View view) {
+        playSound(soundID1);
         try {
             if (selectedOperate_btn != null)
                 init_opButtonnotSelectedState();
@@ -563,9 +592,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void percentButton_onClick(View view) {
+        playSound(soundID1);
         try {
-
-
             if (selectedOperate_btn != null)
                 init_opButtonnotSelectedState();
             calculateComplete = false;
@@ -606,6 +634,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void equalsButton_onClick(View view) {
+        playSound(soundID1);
         //calculateComplete=false;
         try {
 
@@ -673,7 +702,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void opButton_onClick(View view) {
         calculateComplete = false;
-
+        playSound(soundID2);
         Button orgin = (Button) view;
         //设置颜色
         if (selectedOperate_btn == null || selectedOperate_btn.getText().toString().equals(((Button) view).getText().toString())) {
