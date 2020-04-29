@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     private void playSound(int soundID) {
         soundPool.play(
                 soundID,
-                0.1f,      //左耳道音量【0~1】
+                0.5f,      //左耳道音量【0~1】
                 0.5f,      //右耳道音量【0~1】
                 0,         //播放优先级【0表示最低优先级】
                 0,         //循环模式【0表示循环一次，-1表示一直循环，其他表示数字+1表示当前数字对应的循环次数】
@@ -286,6 +286,10 @@ public class MainActivity extends AppCompatActivity {
                 Sirusi.operand1 = null;
                 Sirusi.operand2 = null;
                 Sirusi.operate = "null";
+                Cached= false;
+                preOperate=null;
+                calculatecache=null;
+                calculateComplete=true;
                 //calculatecache=null;
             }
 
@@ -330,33 +334,75 @@ public class MainActivity extends AppCompatActivity {
         }
         //用户没输入op2
         else if (Sirusi.operand2 == null) {
+            if(Cached)
+            {
+                Sirusi.operate = view.getText().toString();
+                //计算但不储存
+                calculoneOperation(calculatecache, preOperate, calculoneOperation(Sirusi.operand1, Sirusi.operate,new BigDecimal("0.0")));
+            }
+            else
             Sirusi.operate = view.getText().toString();
         }
         //用户都输入了
         else {
             if (Cached) {
-                //计算Cached并Cached=false;
-                Sirusi.operand1 = calculoneOperation(calculatecache, preOperate, calculoneOperation(Sirusi.operand1, Sirusi.operate, Sirusi.operand2));
-                //清空op2，计算缓存
-                Sirusi.operand2 = null;
-                tvcache = Sirusi.operand1.toString();
-                //displayTextview.setText(tvcache);
-                Sirusi.operate = view.getText().toString();
-                calculatecache = null;
-                preOperate = "null";
-                Cached = false;
+
+                if (!(Sirusi.operate.equals("+") || Sirusi.operate.equals("-"))) {
+                    //前一个不是+/-直接计算保留Cache
+                    //计算Cached并Cached=false;
+                    Sirusi.operand1 = calculoneOperation(Sirusi.operand1, Sirusi.operate, Sirusi.operand2);
+                    //清空op2，计算缓存
+                    Sirusi.operand2 = null;
+                    tvcache = Sirusi.operand1.toString();
+                    //displayTextview.setText(tvcache);
+                    Sirusi.operate = view.getText().toString();
+                } else {
+                    //计算Cached并Cached=false;
+                    Sirusi.operand1 = calculoneOperation(calculatecache, preOperate, calculoneOperation(Sirusi.operand1, Sirusi.operate, Sirusi.operand2));
+                    //清空op2，计算缓存
+                    Sirusi.operand2 = null;
+                    tvcache = Sirusi.operand1.toString();
+                    //displayTextview.setText(tvcache);
+                    Sirusi.operate = view.getText().toString();
+                    calculatecache = null;
+                    preOperate = "null";
+                    Cached = false;
+                }
+
+
             } else
             //不需要处理Cache
             {
-                //处理结果并显示
-                Sirusi.operand1 = calculoneOperation(Sirusi.operand1, Sirusi.operate, Sirusi.operand2);
-                //清空op2，计算缓存
-                Sirusi.operand2 = null;
-                tvcache = Sirusi.operand1.toString();
-                //displayTextview.setText(tvcache);
-                Sirusi.operate = view.getText().toString();
-                calculatecache = null;
-                preOperate = "null";
+
+                /*没有需要计算的cache */
+
+                //前一个运算符是+/-需要Cache
+                if (Sirusi.operate.equals("+") || Sirusi.operate.equals("-")) {
+                    //计算但不储存
+                    calculoneOperation(Sirusi.operand1, Sirusi.operate, Sirusi.operand2);
+                    calculatecache = Sirusi.operand1;
+                    preOperate = Sirusi.operate;
+                    Sirusi.operate = view.getText().toString();
+                    Sirusi.operand1 = Sirusi.operand2;
+                    Sirusi.operand2 = null;
+                    Cached = true;
+
+
+                } else {
+                    //前一个不是+/-直接计算不Cache
+                    //计算Cached并Cached=false;
+                    Sirusi.operand1 = calculoneOperation(Sirusi.operand1, Sirusi.operate, Sirusi.operand2);
+                    //清空op2，计算缓存
+                    Sirusi.operand2 = null;
+                    tvcache = Sirusi.operand1.toString();
+                    //displayTextview.setText(tvcache);
+                    Sirusi.operate = view.getText().toString();
+                    calculatecache = null;
+                    preOperate = "null";
+                    Cached = false;
+
+                }
+
             }
         }
 
@@ -371,7 +417,14 @@ public class MainActivity extends AppCompatActivity {
         }
         //用户没输入op2
         else if (Sirusi.operand2 == null) {
-            Sirusi.operate = view.getText().toString();
+            if(Cached)
+            {
+                Sirusi.operate = view.getText().toString();
+                //计算但不储存
+                displayTextview.setText(Sirusi.operand1.toString());
+            }
+            else
+                Sirusi.operate = view.getText().toString();
         } else {
             if (Cached) {
 
@@ -493,6 +546,7 @@ public class MainActivity extends AppCompatActivity {
                     return result;
                 } else {
                     displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(a, b, operate, "#")).format(result));
+                    //displayTextview.setText(result.toString());
                     return result;
                 }
             case "-":
@@ -503,6 +557,7 @@ public class MainActivity extends AppCompatActivity {
                     return result;
                 } else {
                     displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(a, b, operate, "#")).format(result));
+                    //displayTextview.setText(result.toString());
                     return result;
                 }
             case "×":
@@ -513,6 +568,7 @@ public class MainActivity extends AppCompatActivity {
                     return result;
                 } else {
                     displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(a, b, operate, "#")).format(result));
+                    //displayTextview.setText(result.toString());
                     return result;
                 }
             case "÷":
@@ -543,7 +599,7 @@ public class MainActivity extends AppCompatActivity {
                         displayTextview.setText(result.toEngineeringString());
                         return result;
                     } else {
-                        displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(a, b, operate, "#")).format(result));
+                        displayTextview.setText(result.toString());
                         return result;
                     }
                 }
@@ -565,20 +621,27 @@ public class MainActivity extends AppCompatActivity {
                     displayTextview.setText("0");
                     Log.e("inverseButton", Sirusi.operand1 + "");
                 } else {
-                    Sirusi.operand1 = Sirusi.operand1.multiply(new BigDecimal(-1));
+
+                    Sirusi.operand1 =calculoneOperation(Sirusi.operand1,"×",new BigDecimal("-1"));
+                    tvcache =Sirusi.operand1.toString();
+
+                    //Sirusi.operand1 = Sirusi.operand1.multiply(new BigDecimal(-1));
                     //tvcache = Sirusi.operand1.toString();
                     //displayTextview.setText(tvcache);
-                    tvcache = new DecimalFormat(getMaxLengthofDecimal_pattern(Sirusi.operand1, new BigDecimal("0"), "+", "#")).format(Sirusi.operand1);
-                    displayTextview.setText(tvcache);
+
+                    //tvcache = new DecimalFormat(getMaxLengthofDecimal_pattern(Sirusi.operand1, new BigDecimal("0"), "+", "#")).format(Sirusi.operand1);
+                    //displayTextview.setText(tvcache);
                     Log.e("inverseButton", Sirusi.operand1 + "");
                 }
 
             } else {
-                Sirusi.operand2 = Sirusi.operand2.multiply(new BigDecimal(-1));
+                Sirusi.operand2 =calculoneOperation(Sirusi.operand2,"×",new BigDecimal("-1"));
+                tvcache =Sirusi.operand2.toString();
+                //Sirusi.operand2 = Sirusi.operand2.multiply(new BigDecimal(-1));
                 //tvcache = Sirusi.operand2.toString();
 
-                tvcache = new DecimalFormat(getMaxLengthofDecimal_pattern(Sirusi.operand2, new BigDecimal("0"), "+", "#")).format(Sirusi.operand2);
-                displayTextview.setText(tvcache);
+                //tvcache = new DecimalFormat(getMaxLengthofDecimal_pattern(Sirusi.operand2, new BigDecimal("0"), "+", "#")).format(Sirusi.operand2);
+                //displayTextview.setText(tvcache);
                 //displayTextview.setText(tvcache);
                 //displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(Double.valueOf(tvcache), Double.valueOf("0"), "+")).format(Double.valueOf(tvcache)));
                 Log.e("inverseButton", Sirusi.operand2 + "");
@@ -604,22 +667,23 @@ public class MainActivity extends AppCompatActivity {
                     displayTextview.setText("0");
                     Log.e("percentButton", Sirusi.operand1 + "");
                 } else {
-                    Sirusi.operand1 = Sirusi.operand1.divide(new BigDecimal("100"));
-                    //tvcache = Sirusi.operand1.toString();
-                    //displayTextview.setText(tvcache);
-                    tvcache = new DecimalFormat(getMaxLengthofDecimal_pattern(Sirusi.operand1, new BigDecimal("0"), "+", "#")).format(Sirusi.operand1);
-                    displayTextview.setText(tvcache);
+                    Sirusi.operand1 =calculoneOperation(Sirusi.operand1,"×",new BigDecimal("0.01"));
+                    tvcache =Sirusi.operand1.toString();
+//                    Sirusi.operand1 = Sirusi.operand1.divide(new BigDecimal("100"));
+//                    //tvcache = Sirusi.operand1.toString();
+//                    //displayTextview.setText(tvcache);
+//                    tvcache = new DecimalFormat(getMaxLengthofDecimal_pattern(Sirusi.operand1, new BigDecimal("0"), "+", "#")).format(Sirusi.operand1);
+//                    displayTextview.setText(tvcache);
                     Log.e("percentButton", Sirusi.operand1 + "");
                 }
 
             } else {
-                Sirusi.operand2 = Sirusi.operand2.divide(new BigDecimal("100"));
-                //tvcache = Sirusi.operand2.toString();
-
-                tvcache = new DecimalFormat(getMaxLengthofDecimal_pattern(Sirusi.operand2, new BigDecimal("0"), "+", "#")).format(Sirusi.operand2);
-                displayTextview.setText(tvcache);
-                //displayTextview.setText(tvcache);
-                //displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(Double.valueOf(tvcache), Double.valueOf("0"), "+")).format(Double.valueOf(tvcache)));
+                Sirusi.operand2 =calculoneOperation(Sirusi.operand2,"×.0.1",new BigDecimal("100"));
+                tvcache =Sirusi.operand2.toString();
+//                Sirusi.operand2 = Sirusi.operand2.divide(new BigDecimal("100"));
+//
+//                tvcache = new DecimalFormat(getMaxLengthofDecimal_pattern(Sirusi.operand2, new BigDecimal("0"), "+", "#")).format(Sirusi.operand2);
+//                displayTextview.setText(tvcache);
                 Log.e("percentButton", Sirusi.operand2 + "");
             }
         } catch (Exception e) {
@@ -648,13 +712,10 @@ public class MainActivity extends AppCompatActivity {
                 //Sirusi.operand1 = calculoneOperation(calculatecache, preOperate, Sirusi.operand1);
                 Sirusi.operand1 = calculoneOperation(calculatecache, preOperate, calculoneOperation(Sirusi.operand1, Sirusi.operate, Sirusi.operand2));
                 //清空op2，计算缓存
-                Sirusi.operand2 = null;
+
                 tvcache = Sirusi.operand1.toString();
                 //displayTextview.setText(tvcache);
-                Sirusi.operate = "null";
-                calculatecache = null;
-                preOperate = "null";
-                Cached = false;
+
             } else
             //不需要处理Cache
             {
@@ -662,30 +723,39 @@ public class MainActivity extends AppCompatActivity {
 
                     //处理结果并显示
                     Sirusi.operand1 = calculoneOperation(Sirusi.operand1, Sirusi.operate, Sirusi.operand2);
-                    //清空op2，计算缓存
-                    Sirusi.operand2 = null;
                     tvcache = Sirusi.operand1.toString();
-                    //displayTextview.setText(tvcache);
-                    Sirusi.operate = "null";
-                    calculatecache = null;
-                    preOperate = "null";
-                    calculateComplete = true;
                 } catch (Exception e) {
                     if (Sirusi.operand1 == null)
                         Sirusi.operand1 = new BigDecimal(tvcache);
 
+//                    if (calculateComplete&&Sirusi.operate!="null") {
+//                            //累计运算功能
+//                            //处理结果并显示
+//                            Sirusi.operand1 = calculoneOperation(Sirusi.operand1, Sirusi.operate, Sirusi.operand1);
+//                    }
+//                    if(Sirusi.operate!="null") {
+//                        Sirusi.operand2 = null;
+//                        calculatecache = null;
+//                        preOperate = "null";
+//                        Cached = false;
+//                        calculateComplete = true;
+//                        return;
+//                    }
+
+
                     //处理结果并显示
                     //Sirusi.operand1=calculoneOperation(Sirusi.operand1,Sirusi.operate,Sirusi.operand2);
-                    //清空op2，计算缓存
-                    Sirusi.operand2 = null;
+
+
                     tvcache = Sirusi.operand1.toString();
 
                     displayTextview.setText(new DecimalFormat(getMaxLengthofDecimal_pattern(new BigDecimal(tvcache), new BigDecimal("0"), "+", "#")).format(new BigDecimal(tvcache)));
 
+
+
+
+
                     //displayTextview.setText(tvcache);
-                    Sirusi.operate = "null";
-                    calculatecache = null;
-                    preOperate = "null";
                     Log.e("用户骚操作,被我逮到了", e.toString());
                 }
 
@@ -693,10 +763,22 @@ public class MainActivity extends AppCompatActivity {
 
 
         } catch (Exception e) {
+            if(Cached)
+            {
+                Sirusi.operand1 = calculoneOperation(calculatecache, preOperate,Sirusi.operand1);
+
+            }
+
+
             Log.e("你是来捣乱的吧", e.toString());
         }
-
-
+        //清空op2，计算缓存
+        Sirusi.operand2 = null;
+        Sirusi.operate = "null";
+        calculatecache = null;
+        preOperate = "null";
+        Cached = false;
+        calculateComplete = true;
     }
 
 
