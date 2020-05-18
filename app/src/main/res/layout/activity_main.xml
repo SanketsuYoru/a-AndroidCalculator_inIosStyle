@@ -7,14 +7,11 @@
     android:background="@android:color/background_dark"
     android:orientation="vertical"
     tools:context=".MainActivity">
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -22,14 +19,12 @@
             android:layout_weight="5"
             android:layout_marginRight="30dp"
             >
-
             <TextView
                 android:id="@+id/display_tv"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_gravity="bottom"
                 android:autoSizeMaxTextSize="80sp"
-
                 android:autoSizeMinTextSize="30sp"
                 android:autoSizeTextType="uniform"
                 android:gravity="right"
@@ -38,15 +33,12 @@
                 android:textSize="80sp"
                 android:textStyle="normal"></TextView>
         </LinearLayout>
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
             android:layout_weight="10.8"
             android:orientation="vertical">
-
             <LinearLayout
                 style="?android:attr/buttonBarStyle"
                 android:layout_width="match_parent"
@@ -56,7 +48,6 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal">
-
                 <Button
                     android:id="@+id/ac_Button"
                     style="?android:attr/buttonBarButtonStyle"
@@ -70,7 +61,6 @@
                     android:text="AC"
                     android:textColor="#000000"
                     android:textSize="36sp"></Button>
-
                 <Button
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="85dp"
@@ -83,7 +73,6 @@
                     android:text="+/-"
                     android:textColor="#000000"
                     android:textSize="36sp"></Button>
-
                 <Button
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="85dp"
@@ -96,7 +85,6 @@
                     android:text="%"
                     android:textColor="#000000"
                     android:textSize="36sp"></Button>
-
                 <Button
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="85dp"
@@ -109,9 +97,7 @@
                     android:text="÷"
                     android:textColor="#F6F6F6"
                     android:textSize="36sp"></Button>
-
             </LinearLayout>
-
             <LinearLayout
                 style="?android:attr/buttonBarStyle"
                 android:layout_width="match_parent"
@@ -121,7 +107,6 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal">
-
                 <Button
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="85dp"
@@ -134,7 +119,6 @@
                     android:text="7"
                     android:textColor="#F6F6F6"
                     android:textSize="36sp"></Button>
-
                 <Button
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="85dp"
@@ -147,7 +131,6 @@
                     android:text="8"
                     android:textColor="#F6F6F6"
                     android:textSize="36sp"></Button>
-
                 <Button
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="85dp"
@@ -160,7 +143,6 @@
                     android:text="9"
                     android:textColor="#F6F6F6"
                     android:textSize="36sp"></Button>
-
                 <Button
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="85dp"
@@ -173,9 +155,7 @@
                     android:text="×"
                     android:textColor="#F6F6F6"
                     android:textSize="36sp"></Button>
-
             </LinearLayout>
-
             <LinearLayout
                 style="?android:attr/buttonBarStyle"
                 android:layout_width="match_parent"
@@ -185,7 +165,6 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal">
-
                 <Button
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="85dp"
@@ -198,7 +177,6 @@
                     android:text="4"
                     android:textColor="#F6F6F6"
                     android:textSize="36sp"></Button>
-
                 <Button
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="85dp"
@@ -211,7 +189,6 @@
                     android:text="5"
                     android:textColor="#F6F6F6"
                     android:textSize="36sp"></Button>
-
                 <Button
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="85dp"
@@ -224,7 +201,6 @@
                     android:text="6"
                     android:textColor="#F6F6F6"
                     android:textSize="36sp"></Button>
-
                 <Button
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="85dp"
@@ -237,9 +213,7 @@
                     android:text="-"
                     android:textColor="#F6F6F6"
                     android:textSize="45dp"></Button>
-
             </LinearLayout>
-
             <LinearLayout
                 style="?android:attr/buttonBarStyle"
                 android:layout_width="match_parent"
@@ -250,7 +224,6 @@
                 android:backgroundTint="#262626"
                 android:gravity="center"
                 android:orientation="horizontal">
-
                 <Button
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="85dp"
@@ -263,7 +236,6 @@
                     android:text="1"
                     android:textColor="#F6F6F6"
                     android:textSize="36sp"></Button>
-
                 <Button
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="85dp"
@@ -276,7 +248,6 @@
                     android:text="2"
                     android:textColor="#F6F6F6"
                     android:textSize="36sp"></Button>
-
                 <Button
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="85dp"
@@ -289,7 +260,6 @@
                     android:text="3"
                     android:textColor="#F6F6F6"
                     android:textSize="36sp"></Button>
-
                 <Button
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="85dp"
@@ -302,9 +272,7 @@
                     android:text="+"
                     android:textColor="#F6F6F6"
                     android:textSize="36sp"></Button>
-
             </LinearLayout>
-
             <LinearLayout
                 style="?android:attr/buttonBarStyle"
                 android:layout_width="match_parent"
@@ -314,7 +282,6 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal">
-
                 <Button
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="180dp"
@@ -332,7 +299,6 @@
                     android:text="0"
                     android:textColor="#F6F6F6"
                     android:textSize="36sp"></Button>
-
                 <Button
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="85dp"
@@ -345,7 +311,6 @@
                     android:text="."
                     android:textColor="#F6F6F6"
                     android:textSize="42dp"></Button>
-
                 <Button
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="85dp"
@@ -358,12 +323,7 @@
                     android:text="="
                     android:textColor="#F6F6F6"
                     android:textSize="45dp"></Button>
-
             </LinearLayout>
-
-
         </LinearLayout>
     </LinearLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

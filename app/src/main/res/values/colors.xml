@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="buttonLocked_Textcolor">#FD9009</color>
     <color name="buttonUnLocked_Textcolor">#F6F6F6</color>
+    <color name="BackGroundColor_Primary">@android:color/background_dark</color>
 </resources>
